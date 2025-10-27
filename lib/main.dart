@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'UBTrackMyChildren',
+      title: 'UBSafeStep',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: const Color(0xFF862334),
@@ -96,17 +96,20 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.security, size: 100, color: theme.colorScheme.primary),
-              const SizedBox(height: 24),
+              Image.asset(
+                'asset/UBSafestep.png',
+                    width: 400,
+                    height: 300,
+                ),
               Text(
                 'Welcome Back!',
                 style: TextStyle(
-                  fontSize: 28,
+                  fontSize: 35,
                   fontWeight: FontWeight.bold,
                   color: theme.colorScheme.primary,
                 ),
               ),
-              const SizedBox(height: 8), // Fixed this line (was an emoji before)
+              const SizedBox(height: 8), 
               Text(
                 'Login to continue',
                 style: TextStyle(
@@ -317,7 +320,32 @@ class DashboardScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: const Text('UB Track My Children', style: TextStyle(color: Colors.white)),
+        title: Row(
+          children: [
+            
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Image.asset(
+                'asset/UBlogo.png',
+                width: 50,
+                height: 50,
+                errorBuilder: (context, error, stackTrace) => 
+                    const Icon(Icons.error_outline, color: Colors.white),
+              )
+            ),
+            
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                child: const Text(
+                  'UBSafestep',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+            const SizedBox(width: 40),
+          ],
+        ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
@@ -330,6 +358,7 @@ class DashboardScreen extends StatelessWidget {
         ],
         iconTheme: const IconThemeData(color: Colors.white),
       ),
+
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -781,7 +810,33 @@ class NotificationsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: const Text('Notifications', style: TextStyle(color: Colors.white)),
+        title: Row(
+          children: [
+            // Logo on the left
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Image.asset(
+                'asset/UBlogo.png', // Your logo path
+                width: 50,
+                height: 50,
+                errorBuilder: (context, error, stackTrace) => 
+                    const Icon(Icons.error_outline, color: Colors.white),
+              ),
+            ),
+            // Centered title
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                child: const Text(
+                  'Notifications',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+            // Invisible placeholder to balance the logo
+            const SizedBox(width: 40), // Matches logo width + padding
+          ],
+        ),
         iconTheme: const IconThemeData(color: Colors.white),
         actions: [
           Padding(
@@ -972,64 +1027,88 @@ class MapScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Live Location', style: TextStyle(color: Colors.white)),
-        iconTheme: const IconThemeData(color: Colors.white),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Refreshing location data...')),
-              );
-            },
-            tooltip: 'Refresh map',
+  title: Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+
+      Padding(
+        padding: const EdgeInsets.only(right: 8.0),
+        child: Image.asset(
+          'asset/UBlogo.png',
+          width: 50,
+          height: 50,
+          fit: BoxFit.contain,
+        ),
+      ),
+      // Centered text
+      Expanded(
+        child: Container(
+          alignment: Alignment.center,
+          child: const Text(
+            'Live Location',
+            style: TextStyle(color: Colors.white),
           ),
-          IconButton(
-            icon: const Icon(Icons.layers),
-            onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                ),
-                builder: (context) => Container(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text(
-                        'Map Layers',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      ListTile(
-                        leading: Icon(Icons.map, color: primaryColor),
-                        title: const Text('Default Map'),
-                        trailing: const Icon(Icons.check_circle, color: Colors.green),
-                        onTap: () => Navigator.pop(context),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.satellite, color: primaryColor),
-                        title: const Text('Satellite View'),
-                        onTap: () => Navigator.pop(context),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.directions, color: primaryColor),
-                        title: const Text('Traffic View'),
-                        onTap: () => Navigator.pop(context),
-                      ),
-                    ],
+        ),
+      ),
+    ],
+  ),
+  iconTheme: const IconThemeData(color: Colors.white),
+  actions: [
+    IconButton(
+      icon: const Icon(Icons.refresh),
+      onPressed: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Refreshing location data...')),
+        );
+      },
+      tooltip: 'Refresh map',
+    ),
+    IconButton(
+      icon: const Icon(Icons.layers),
+      onPressed: () {
+        showModalBottomSheet(
+          context: context,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          builder: (context) => Container(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Map Layers',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              );
-            },
-            tooltip: 'Map layers',
+                const SizedBox(height: 16),
+                ListTile(
+                  leading: Icon(Icons.map, color: primaryColor),
+                  title: const Text('Default Map'),
+                  trailing: const Icon(Icons.check_circle, color: Colors.green),
+                  onTap: () => Navigator.pop(context),
+                ),
+                ListTile(
+                  leading: Icon(Icons.satellite, color: primaryColor),
+                  title: const Text('Satellite View'),
+                  onTap: () => Navigator.pop(context),
+                ),
+                ListTile(
+                  leading: Icon(Icons.directions, color: primaryColor),
+                  title: const Text('Traffic View'),
+                  onTap: () => Navigator.pop(context),
+                ),
+              ],
+            ),
           ),
-        ],
-      ),
+        );
+      },
+      tooltip: 'Map layers',
+    ),
+  ],
+),
       body: Stack(
         children: [
           // Map placeholder
@@ -1308,26 +1387,44 @@ class _SafeZonesScreenState extends State<SafeZonesScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final primaryColor = const Color(0xFF862334);
-    
-    return Scaffold(
-      backgroundColor: Colors.grey[50],
-      appBar: AppBar(
-        title: const Text('Safe Zones', style: TextStyle(color: Colors.white)),
-        iconTheme: const IconThemeData(color: Colors.white),
-        actions: [
-          IconButton(
-            icon: Container(
-              padding: const EdgeInsets.all(6),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(Icons.add_location_alt, size: 24),
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: Colors.grey[50],
+    appBar: AppBar(
+      title: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Image.asset(
+              'asset/UBlogo.png',
+              width: 50, // Adjust size as needed
+              height: 50,
             ),
-            tooltip: 'Add Safe Zone',
-            onPressed: () => _showAddSafeZoneDialog(context),
+          ),
+            Expanded(
+        child: Container(
+          alignment: Alignment.center,
+          child: const Text(
+            'Safe Zones',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
+    ],
+      ),
+      iconTheme: const IconThemeData(color: Colors.white),
+      actions: [
+        IconButton(
+          icon: Container(
+            padding: const EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.2),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(Icons.add_location, size: 24),
+          ),
+          tooltip: 'Add Safe Zone',
+          onPressed: () => _showAddSafeZoneDialog(context),
           ),
         ],
       ),
@@ -1379,16 +1476,6 @@ class _SafeZonesScreenState extends State<SafeZonesScreen> {
             ),
           );
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: primaryColor,
-        foregroundColor: Colors.white,
-        elevation: 4,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: const Icon(Icons.add),
-        onPressed: () => _showAddSafeZoneDialog(context),
       ),
     );
   }
@@ -1442,7 +1529,7 @@ class _SafeZonesScreenState extends State<SafeZonesScreen> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF862334),
+                  backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                 ),
                 onPressed: () {
                   if (_nameController.text.isEmpty || _addressController.text.isEmpty) {
@@ -1571,12 +1658,12 @@ class SettingsScreen extends StatelessWidget {
               onTap: () {
                 showAboutDialog(
                   context: context,
-                  applicationName: 'UBTrackMyChildren',
+                  applicationName: 'UBsafestep',
                   applicationVersion: '1.0.0',
                   applicationIcon: Icon(Icons.location_on, color: primaryColor),
                   children: [
                     const SizedBox(height: 8),
-                    const Text('Developed by UB Team.\nFor demo purposes only.'),
+                    const Text('Developed by Team Dragon.\nFor demo purposes only.'),
                   ],
                 );
               },
